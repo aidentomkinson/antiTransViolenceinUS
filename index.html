@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trans Violence in the United States</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+
+      .chartCard {
+        width: 100vw;
+        height: calc(100vh - 40px);
+        background: rgba(255,255,255);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chartBox {
+        width: 800px;
+        padding: 20px;
+        border-radius: 20px;
+        border: solid 3px rgba(236, 96, 62);
+        background: white;
+      }
+      .container {
+          width: 800px;
+          max-width: 800px;
+          overflow-x: scroll;
+      }
+      .containerBody{
+          height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="chartCard">
+      <div class="chartBox">
+          <div class = "container">
+              <div class = "containerBody">
+                <canvas id="myChart"></canvas>
+              </div>
+          </div>
+        
+      </div>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+    <script>
+    // setup 
+    const data = {
+      labels: ['Jan 2017', 'Feb 2017', 'March 2017', 'May 2017', 'July 2017', 'Feb 2018', 'May 2018', 'July 2018', 'Oct 2018', 'Jan 2019', 'Jan 2019',
+      'March 2019', 'May 2019', 'June 2019', 'April 2020', 'June 2020', 'July 2020', 'Sept 2020', 'April 2021', 'Nov 2021', 'June 2022', 'June 2022','July 2022', 'July 2022',
+      'Aug 2022', 'Aug 2022', 'Sept 2022', 'Dec 2022', 'Jan 2023','Feb 2023', 'March 2023','March 2023','March 2023', 'April 2023', 'April 2023'],
+      datasets: [{
+        label: 'Genocide stage',
+        data: [
+            { date: 'Jan 2017', events: { scale: 5, link: 'https://www.hrc.org/news/hrc-opposes-the-nomination-of-judge-neil-gorsuch-to-the-supreme-court'} },
+            { date: 'Feb 2017',events: { scale: 3, link: 'https://www.cnn.com/2017/02/22/politics/doj-withdraws-federal-protections-on-transgender-bathrooms-in-schools/index.html'} },
+            { date: 'March 2017',events: { scale: 4, link: 'https://www.hrc.org/news/trump-administration-eliminates-lgbtq-data-collection-from-census'} },
+            { date: 'May 2017',events: { scale: 3, link: 'https://www.hrc.org/news/president-donald-trump-lays-groundwork-for-licensetodiscriminate'} },
+            { date: 'July 2017',events: { scale: 3, link: 'https://www.americanoversight.org/investigation/trump-administrations-transgender-military-ban'} },
+            { date: 'Feb 2018',events: { scale: 4, link: 'https://www.hrc.org/news/department-of-education-admits-to-rejecting-trans-civil-rights-complaints'} },
+            { date: 'May 2018',events: { scale: 4, link: 'https://www.hrc.org/news/hrc-responds-to-rollback-of-obama-guidance-that-protects-safety-of-tran'} },
+            { date: 'July 2018',events: { scale: 5, link: 'https://en.wikipedia.org/wiki/Brett_Kavanaugh_Supreme_Court_nomination#:~:text=On%20July%209%2C%202018%2C%20President,succeed%20retiring%20Justice%20Anthony%20Kennedy.'} },
+            { date: 'Oct 2018', events: { scale: 5, link: 'https://www.hrc.org/news/trump-pence-admin-reportedly-planning-to-erase-non-discrimination-protectio'}},
+            { date: 'Jan 2019', events:{ scale: 3, link: 'https://www.hrc.org/news/supreme-court-declines-trans-military-ban-cases-but-permits-enforcement'}},
+            { date: 'Jan 2019', events: {scale: 4, link: 'https://www.poz.com/blog/trump-administration-proposal-remove-protections-hiv-meds'}},
+            { date: 'March 2019', events: {scale: 4, link: 'https://www.hrc.org/news/trump-pence-admin-refuses-to-join-call-for-investigation-in-chechnya'}},
+            { date: 'May 2019', events: { scale: 3, link: 'https://www.hrc.org/news/shame-trump-pence-administration-declares-opposition-to-equality-act'}},
+            { date: 'June 2019', events: {scale: 4, link: 'https://www.hrc.org/resources/trumps-timeline-of-hate'}},
+            { date: 'April 2020', events: {scale: 3, link: 'https://www.politico.com/news/2020/03/31/trump-obamacare-coronavirus-157788'}},
+            { date: 'June 2020', events: {scale: 4, link: 'https://www.cnbc.com/2020/06/16/trump-praises-scientists-for-developing-aids-vaccine-that-doesnt-exist.html'}},
+            { date: 'July 2020', events: {scale: 3, link: 'https://www.nbcnews.com/politics/white-house/trump-announces-steps-roll-back-daca-program-n1235115'}},
+            { date: 'Sept 2020', events: {scale: 5, link: 'https://en.wikipedia.org/wiki/Amy_Coney_Barrett_Supreme_Court_nomination'}},
+            { date: 'April 2021', events: {scale: 3, link: 'https://www.cnn.com/2021/04/15/politics/anti-transgender-legislation-2021/index.html'}},
+            { date: 'Nov 2021', events: { scale: 4, link: 'https://www.forbes.com/sites/jamiewareham/2021/11/11/375-transgender-people-murdered-in-2021-deadliest-year-since-records-began/?sh=6a3b47c4321c'}},
+            { date: 'June 2022', events: {scale: 3, link: 'https://www.politico.com/news/2022/06/24/thomas-constitutional-rights-00042256'}},
+            { date: 'June 2022', events: { scale: 5, link: 'https://www.nbcnews.com/nbc-out/out-news/texas-pastor-says-gay-people-shot-back-head-shocking-sermon-rcna32748'}},
+            { date: 'July 2022', events: {scale: 3, link: 'chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.nea.org/sites/default/files/2022-06/FL%20Dont%20Say%20Gay%20KYR%20-%20Updated2022.06.pdf'}},
+            { date: 'July 2022', events: { scale: 6, link: 'https://www.cnn.com/2022/07/18/health/monkeypox-lgbtq-safety/index.html'}},
+            { date: 'Aug 2022', events: { scale: 6, link: 'https://www.hrc.org/press-releases/new-report-anti-lgbtq-grooming-narrative-surged-more-than-400-on-social-media-following-floridas-dont-say-gay-or-trans-law-as-social-platforms-enabled-extremist-politicians-and-their-allies-to-peddle-inflamatory-discriminatory-rhetoric'}},
+            { date: 'Aug 2022', events: { scale: 6, link: 'https://www.huffpost.com/entry/gay-unfit-parent_n_6307e1f7e4b0fd849b34a9bc'}},
+            { date: 'Sept 2022', events: {scale: 4, link: 'https://pen.org/report/banned-usa-growing-movement-to-censor-books-in-schools/'}},
+            { date: 'Dec 2022', events: { scale: 5, link: 'https://www.yahoo.com/now/texas-creates-chilling-registry-16-181000674.html?'}},
+            { date: 'Jan 2023', events: { scale: 3, link: 'https://www.aclu.org/press-releases/over-120-bills-restricting-lgbtq-rights-introduced-nationwide-2023-so-far'}},
+            { date: 'Feb 2023', events: {scale: 7, link: 'https://rumble.com/v27v5a0-president-trumps-plan-to-protect-children-from-left-wing-gender-insanity.html'}},
+            { date: 'March 2023', events: {scale: 6, link: 'https://apnews.com/article/arkansas-lgbtq-transgender-bathroom-north-carolina-e0d6851d9fff140ebdd9d6449278b620'}},
+            { date: 'March 2023', events: {scale: 7, link: 'https://www.rollingstone.com/politics/politics-news/cpac-speaker-transgender-people-eradicated-1234690924/'}},
+            { date: 'March 2023', events: {scale: 8, link: 'https://www.aclu.org/press-releases/tennessee-bans-gender-affirming-care-for-transgender-youth#:~:text=Bill%20Lee%20signed%20into%20law,effect%20on%20July%201%2C%202023.'}},
+            { date: 'April 2023', events: {scale: 5, link: 'https://www.vox.com/politics/23631262/trans-bills-republican-state-legislatures'}},
+            { date: 'April 2023', events: {scale: 8, link: 'https://www.forbes.com/sites/tylerroush/2023/04/14/here-are-all-the-states-banning-or-restricting-gender-affirming-care/?sh=f014f9648b93'}}
+
+
+
+        ],
+        backgroundColor: [
+          'rgba(38, 45, 58, 0.8)',
+          'rgba(214, 177, 251, 0.8)',
+          'rgba(236, 96, 62, 0.8)',
+          'rgba(185, 198, 255, 0.8)',
+          
+        ],
+        borderColor: [
+        'rgba(38, 45, 58, 1)',
+          'rgba(214, 177, 251, 1)',
+          'rgba(236, 96, 62, 1)',
+          'rgba(185, 198, 255, 1)',
+          
+        ],
+        borderWidth: 1
+      }]
+    };
+
+    // config 
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+          maintainAspectRatio: false,
+          parsing: {
+            xAxisKey: 'date',
+            yAxisKey: 'events.scale'
+          },
+        scales: {
+          y: {
+            beginAtZero: true,
+
+          }
+        }
+      }
+    };
+
+    // render init block
+    const ctx = document.getElementById('myChart')
+    const myChart = new Chart(
+      ctx,
+      config
+    );
+    const containerBody = document.querySelector('.containerBody');
+    const totalLabels = myChart.data.labels.length;
+    if(totalLabels > 7) {
+        const newWidth = 700 + ((totalLabels-7)* 30);
+        containerBody.style.width = `${newWidth}px`;
+    }
+
+    function clickHandler(click){
+        const points = myChart.getElementsAtEventForMode(click, 'nearest', {intersect: true}, true);
+        if (points.length) {
+            const firstPoint = points[0];
+            console.log(firstPoint)
+            const value = myChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index]
+            // console.log(value.scale.link)
+            window.open(value.events.link)
+        }
+    }
+    ctx.onclick = clickHandler
+
+
+    // Instantly assign Chart.js version
+    const chartVersion = document.getElementById('chartVersion');
+    chartVersion.innerText = Chart.version;
+    </script>
+
+  </body>
+</html>
