@@ -32,8 +32,8 @@
           overflow-x: scroll;
       }
       .containerBody{
-          height: 500px;
-      }
+          height: 500px; */
+      /* }
     </style>
   </head>
   <body>
@@ -143,7 +143,7 @@
     const containerBody = document.querySelector('.containerBody');
     const totalLabels = myChart.data.labels.length;
     if(totalLabels > 7) {
-        const newWidth = 800 + ((totalLabels-7)* 30);
+        const newWidth = 700 + ((totalLabels-7)* 30);
         containerBody.style.width = `${newWidth}px`;
     }
 
